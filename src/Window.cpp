@@ -4,6 +4,8 @@
 #include <iostream>
 
 GLFWwindow *Window::window = NULL;
+int Window::width = 0;
+int Window::height = 0;
 
 void Window::createWindow(int width, int height, const char *title) {
     glfwInit();
@@ -20,6 +22,8 @@ void Window::createWindow(int width, int height, const char *title) {
         glfwTerminate();
         std::exit(-1);
     }
+    Window::width = width;
+    Window::height = height;
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -33,9 +37,10 @@ bool Window::shouldClose() {
     return glfwWindowShouldClose(window);
 }
 
-void Window::handleEvents() {
+void Window::pollEvents() {
     glfwPollEvents();
-    processInput(window);
+    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
 }
 
 void Window::swapBuffers() {
@@ -46,13 +51,29 @@ void Window::terminate() {
     glfwTerminate();
 }
 
-void processInput(GLFWwindow *window)
-{
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
+int Window::getKey(int key) {
+    return glfwGetKey(window, key);
+}
+
+int Window::getWidth() {
+    return width;
+}
+
+int Window::getHeight() {
+    return width;
+}
+
+void Window::setWidth(int width) {
+    Window::width = width;
+}
+
+void Window::setHeight(int height) {
+    Window::height = height;
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
+    Window::setWidth(width);
+    Window::setHeight(height);
 }
