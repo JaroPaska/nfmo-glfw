@@ -16,7 +16,7 @@ ifeq ($(OS),Windows_NT)
 	PRE =
 	SUF = .exe
 else
-	LIBS = -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
+	LIBS = -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 	PRE = ./
 	SUF = .out
 endif
