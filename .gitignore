@@ -1,0 +1,4 @@
+# ignore binaries
+*.exe
+*.out
+*.app
