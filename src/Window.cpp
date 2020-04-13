@@ -3,9 +3,9 @@
 #include <cstdlib>
 #include <iostream>
 
-GLFWwindow *Window::window = NULL;
-int Window::width = 0;
-int Window::height = 0;
+GLFWwindow *Window::window;
+int Window::width;
+int Window::height;
 
 void Window::createWindow(int width, int height, const char *title) {
     glfwInit();
@@ -55,25 +55,9 @@ int Window::getKey(int key) {
     return glfwGetKey(window, key);
 }
 
-int Window::getWidth() {
-    return width;
-}
-
-int Window::getHeight() {
-    return width;
-}
-
-void Window::setWidth(int width) {
-    Window::width = width;
-}
-
-void Window::setHeight(int height) {
-    Window::height = height;
-}
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     glViewport(0, 0, width, height);
-    Window::setWidth(width);
-    Window::setHeight(height);
+    Window::width = width;
+    Window::height = height;
 }

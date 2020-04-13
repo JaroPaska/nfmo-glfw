@@ -5,10 +5,10 @@ ODIR = obj
 CC = g++
 CFLAGS = -I$(IDIR) -std=c++17 -g -O2 -Wall -Wextra -DLOCAL
 
-_HEADERS =
+_HEADERS = Window.h Stage.h StagePart.h StageObject.h Get.h
 HEADERS = $(patsubst %,$(SRC_DIR)/%,$(_HEADERS))
 
-_OBJ = glad.o Main.o Window.o
+_OBJ = glad.o Main.o Window.o Stage.o StagePart.o Get.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 ifeq ($(OS),Windows_NT)
