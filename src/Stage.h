@@ -7,13 +7,13 @@
 #include <vector>
 
 struct Stage {
-    glm::vec3 snap;
-    glm::vec3 osky;
-    glm::vec3 sky;
-    glm::vec3 ogrnd;
-    glm::vec3 grnd;
-    glm::vec3 ofog;
-    glm::vec3 fog;
+    glm::vec3 snap = glm::vec3();
+    glm::vec3 osky = glm::vec3(170, 220, 255);
+    glm::vec3 sky = glm::vec3(170, 220, 255);
+    glm::vec3 ogrnd = glm::vec3(205, 200, 200);
+    glm::vec3 grnd = glm::vec3(205, 200, 200);
+    glm::vec3 ofog = glm::vec3(255, 220, 220);
+    glm::vec3 fog = glm::vec3(255, 220, 220);
     float fadefrom;
     int nlaps;
     int nfix;

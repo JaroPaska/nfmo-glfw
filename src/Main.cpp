@@ -8,10 +8,11 @@
 
 int main() {
     Window::createWindow(1280, 720, "NFM Origins");
-    Stage *stage = new Stage(1);
+    Stage *stage = new Stage();
     while (!Window::shouldClose()) {
         Window::pollEvents();
-        glClearColor(stage->sky.r, stage->sky.g, stage->sky.b, 1.0f);
+        glm::vec3 sky = stage->sky / 255.f;
+        glClearColor(sky.r, sky.g, sky.b, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         // do stuff
         
