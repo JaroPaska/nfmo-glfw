@@ -2,9 +2,7 @@
 #include "Stage.h"
 #include <fstream>
 
-Stage::Stage() {
-    
-}
+Stage::Stage() {}
 
 Stage::Stage(int stage) {
     std::string string;
@@ -24,7 +22,8 @@ Stage::Stage(int stage) {
             nlaps = getint(string, 0);
         if (string.rfind("snap(", 0) == 0)
             snap = getvec3(string) / 100.f;
-        if (string.rfind("set(", 0) == 0 || string.rfind("chk(", 0) == 0 || string.rfind("fix(", 0) == 0) {
+        if (string.rfind("set(", 0) == 0 || string.rfind("chk(", 0) == 0 ||
+            string.rfind("fix(", 0) == 0) {
             int type = getint(string, 0);
             if (!scenery && StagePart::isScenery(type))
                 continue;
@@ -42,7 +41,7 @@ Stage::Stage(int stage) {
                 y = GROUND;
                 xz = getfloat(string, 3);
             }
-            StagePart *stagepart = new StagePart(type, x, y, z, xz);
+            std::shared_ptr<StagePart> stagepart(new StagePart(type, x, y, z, xz));
             stageparts.push_back(stagepart);
             if (string.rfind("chk(", 0) == 0)
                 checkpoints.push_back(stagepart);
@@ -53,9 +52,4 @@ Stage::Stage(int stage) {
     sky = osky * (glm::vec3(1) + snap);
     fog = ofog * (glm::vec3(1) + snap);
     grnd = ogrnd * (glm::vec3(1) + snap);
-}
-
-Stage::~Stage() {
-    for (StagePart *stagepart : stageparts)
-        delete stagepart;
 }

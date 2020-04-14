@@ -3,17 +3,17 @@ IDIR = include
 LDIR = lib
 ODIR = obj
 CC = g++
-CFLAGS = -I$(IDIR) -std=c++17 -g -O2 -Wall -Wextra -DLOCAL
+CFLAGS = -I$(IDIR) -std=c++17 -g
 
-_HEADERS = Window.h Stage.h StagePart.h StageObject.h Get.h
+_HEADERS = Window.h Stage.h StagePart.h StageObject.h Get.h Shader.h Polygon.h Model.h CarModel.h
 HEADERS = $(patsubst %,$(SRC_DIR)/%,$(_HEADERS))
 
-_OBJ = glad.o Main.o Window.o Stage.o StagePart.o Get.o
+_OBJ = glad.o Main.o Window.o Stage.o StagePart.o Get.o Model.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 ifeq ($(OS),Windows_NT)
 	LIBS = -lglfw3 -lopengl32 -lgdi32
-	PRE =
+	PREm =
 	SUF = .exe
 else
 	LIBS = -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl

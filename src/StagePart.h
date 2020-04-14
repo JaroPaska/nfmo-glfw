@@ -2,14 +2,6 @@
 #define STAGEPART_H
 #include "StageObject.h"
 
-struct StagePart : StageObject {
-    int type;
-    StagePart (int type, float x, float y, float z, float xz);
-    static bool isScenery(int type);
-    static bool isCheckpoint(int type);
-    static bool isFixpoint(int type);
-};
-    
 const int NORMAL_ROAD = 10;
 const int NORMAL_ROAD_EDGED = 11;
 const int NORMAL_ROAD_TWISTED_LEFT = 12;
@@ -43,4 +35,12 @@ const int WALL = 39;
 const int CHECKPOINT = 40;
 const int FIXING_HOOP = 41;
 const int OFFROAD_CHECKPOINT = 42;
+
+struct StagePart : StageObject {
+    int type;
+    StagePart(int type, float x, float y, float z, float xz);
+    static bool isScenery(int type);
+    static bool isCheckpoint(int type);
+    static bool isFixpoint(int type);
+};
 #endif

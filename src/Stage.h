@@ -4,7 +4,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <memory>
 #include <vector>
+
+const float GROUND = 250;
+const glm::vec3 X_AXIS = glm::vec3(1, 0, 0);
+const glm::vec3 Y_AXIS = glm::vec3(0, -1, 0);
+const glm::vec3 Z_AXIS = glm::vec3(0, 0, 1);
 
 struct Stage {
     glm::vec3 snap = glm::vec3();
@@ -18,16 +24,10 @@ struct Stage {
     int nlaps;
     int nfix;
     bool scenery;
-    std::vector<StagePart*> stageparts;
-    std::vector<StagePart*> checkpoints;
-    std::vector<StagePart*> fixpoints;
+    std::vector<std::shared_ptr<StagePart>> stageparts;
+    std::vector<std::shared_ptr<StagePart>> checkpoints;
+    std::vector<std::shared_ptr<StagePart>> fixpoints;
     Stage();
     Stage(int stage);
-    ~Stage();
 };
-
-const float GROUND = 250;
-const glm::vec3 X_AXIS = glm::vec3(1, 0, 0);
-const glm::vec3 Y_AXIS = glm::vec3(0, -1, 0);
-const glm::vec3 Z_AXIS = glm::vec3(0, 0, 1);
 #endif
