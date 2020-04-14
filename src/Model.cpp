@@ -1,6 +1,8 @@
 #include "Get.h"
 #include "Model.h"
 #include <fstream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 Model::Model(std::string path) {
     std::string string;
@@ -16,13 +18,13 @@ Model::Model(std::string path) {
             if (string.rfind("colnum(", 0) == 0)
                 polygons.back()->colnum = getint(string, 0);
             if (string.rfind("glass(", 0) == 0)
-                polygons.back()->material = MATERIAL_GLASS;
+                polygons.back()->polyType = POLYS_GLASS;
             if (string.rfind("light(", 0) == 0)
-                polygons.back()->material = MATERIAL_LIGHT;
+                polygons.back()->polyType = POLYS_LIGHT;
             if (string.rfind("outline(", 0) == 0)
-                polygons.back()->lines = LINES_FLAT_COLOR;
+                polygons.back()->lineType = LINES_FLAT_COLOR;
             if (string.rfind("charged(", 0) == 0)
-                polygons.back()->lines = LINES_CHARGED;
+                polygons.back()->lineType = LINES_CHARGED;
             if (string.rfind("p(", 0) == 0) {
                 int npoints = getint(string, 0);
                 for (int i = 0; i < npoints; i++)
@@ -35,4 +37,11 @@ Model::Model(std::string path) {
             }
         }
     }
+}
+
+Model::~Model() {
+    for (int i = 0; i < polyVAOs.size(); i++)
+        glDeleteVertexArrays(1, &polyVAOs[i]);
+    for (int i = 0; i < polyVBOs.size(); i++)
+        glDeleteBuffers(1, &polyVBOs[i]);
 }

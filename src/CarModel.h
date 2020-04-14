@@ -4,5 +4,6 @@
 
 struct CarModel : Model {
     std::vector<std::shared_ptr<Model>> wheelModels;
+    CarModel(std::string path);
 };
 #endif
