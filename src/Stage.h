@@ -8,26 +8,23 @@
 #include <vector>
 
 const float GROUND = 250;
-const glm::vec3 X_AXIS = glm::vec3(1, 0, 0);
-const glm::vec3 Y_AXIS = glm::vec3(0, -1, 0);
-const glm::vec3 Z_AXIS = glm::vec3(0, 0, 1);
+const glm::vec3 X_AXIS = glm::vec3(1.f, 0.f, 0.f);
+const glm::vec3 Y_AXIS = glm::vec3(0.f, -1.f, 0.f);
+const glm::vec3 Z_AXIS = glm::vec3(0.f, 0.f, 1.f);
 
 struct Stage {
     glm::vec3 snap = glm::vec3();
-    glm::vec3 osky = glm::vec3(170, 220, 255);
-    glm::vec3 sky = glm::vec3(170, 220, 255);
-    glm::vec3 ogrnd = glm::vec3(205, 200, 200);
-    glm::vec3 grnd = glm::vec3(205, 200, 200);
-    glm::vec3 ofog = glm::vec3(255, 220, 220);
-    glm::vec3 fog = glm::vec3(255, 220, 220);
+    glm::vec3 sky = glm::vec3(170.f, 220.f, 255.f);
+    glm::vec3 grnd = glm::vec3(205.f, 200.f, 200.f);
+    glm::vec3 fog = glm::vec3(255.f, 220.f, 220.f);
     float fadefrom;
     int nlaps;
     int nfix;
     bool scenery;
-    std::vector<std::shared_ptr<StagePart>> stageparts;
-    std::vector<std::shared_ptr<StagePart>> checkpoints;
-    std::vector<std::shared_ptr<StagePart>> fixpoints;
+    std::vector<std::shared_ptr<StagePart>> stageParts;
+    std::vector<std::shared_ptr<StagePart>> checkPoints;
+    std::vector<std::shared_ptr<StagePart>> fixPoints;
     Stage();
-    Stage(int stage);
+    Stage(std::string path);
 };
 #endif

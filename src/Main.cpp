@@ -1,20 +1,23 @@
+#include "Renderer.h"
 #include "Stage.h"
 #include "Window.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <memory>
+
+#include "Get.h"
 
 int main() {
     Window::createWindow(1280, 720, "NFM Origins");
-    std::shared_ptr<Stage> stage(new Stage());
+    Renderer::loadShaders();
+    Renderer::loadModels();
+    std::shared_ptr<Stage> stage(new Stage("stages/2.txt"));
     while (!Window::shouldClose()) {
         Window::pollEvents();
-        glm::vec3 sky = stage->sky / 255.f;
-        glClearColor(sky.r, sky.g, sky.b, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
         // do stuff
-
+        Renderer::render(stage);
         //
         Window::swapBuffers();
     }

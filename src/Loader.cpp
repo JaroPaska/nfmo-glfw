@@ -1,6 +1,7 @@
 #include "Loader.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
 
 void Loader::loadModel(std::shared_ptr<Model> model) {
     std::vector<std::vector<std::shared_ptr<Polygon>>> byPolyType(POLYS_TYPES);
@@ -11,8 +12,9 @@ void Loader::loadModel(std::shared_ptr<Model> model) {
             byLineType[model->polygons[i]->lineType].push_back(model->polygons[i]);
     }
 
-    model->polyVAOs.resize(POLYS_TYPES);
-    model->polyVBOs.resize(POLYS_TYPES);
+    model->polyVAOs.assign(POLYS_TYPES, 0);
+    model->polyVBOs.assign(POLYS_TYPES, 0);
+    model->polyVertexCount.assign(POLYS_TYPES, 0);
     for (int i = 0; i < POLYS_TYPES; i++) {
         std::vector<float> buffer;
         for (int j = 0; j < byPolyType[i].size(); j++) {
@@ -23,22 +25,30 @@ void Loader::loadModel(std::shared_ptr<Model> model) {
                     for (int m = 0; m < 3; m++)
                         buffer.push_back(byPolyType[i][j]->normal[m]);
                     for (int m = 0; m < 3; m++)
-                        buffer.push_back(byPolyType[i][j]->color[m]);
+                        buffer.push_back(byPolyType[i][j]->color[m] / 255.f);
                 }
             }
         }
-        glGenVertexArrays(1, &model->polyVAOs[i]);
-        glGenBuffers(1, &model->polyVBOs[i]);
-        glBindVertexArray(model->polyVAOs[i]);
-        glBindBuffer(GL_ARRAY_BUFFER, model->polyVBOs[i]);
-        glBufferData(GL_ARRAY_BUFFER, buffer.size() * sizeof(float), &buffer[0], GL_STATIC_DRAW);
-        for (int j = 0; j < 3; j++) {
-            glVertexAttribPointer(j, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void *)(3 * j));
-            glEnableVertexAttribArray(j);
+        if (!buffer.empty()) {
+            glGenVertexArrays(1, &model->polyVAOs[i]);
+            glGenBuffers(1, &model->polyVBOs[i]);
+            glBindVertexArray(model->polyVAOs[i]);
+            glBindBuffer(GL_ARRAY_BUFFER, model->polyVBOs[i]);
+            glBufferData(GL_ARRAY_BUFFER, buffer.size() * sizeof(float), buffer.data(),
+                         GL_STATIC_DRAW);
+            for (int j = 0; j < 3; j++) {
+                glVertexAttribPointer(j, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
+                                      (void *)(3 * j * sizeof(float)));
+                glEnableVertexAttribArray(j);
+            }
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            glBindVertexArray(0);
+            model->polyVertexCount[i] = buffer.size() / 9;
         }
     }
-    model->lineVAOs.resize(LINES_TYPES);
-    model->lineVBOs.resize(LINES_TYPES);
+    model->lineVAOs.assign(LINES_TYPES, 0);
+    model->lineVBOs.assign(LINES_TYPES, 0);
+    model->lineVertexCount.assign(LINES_TYPES, 0);
     for (int i = 0; i < LINES_TYPES; i++) {
         std::vector<float> buffer;
         for (int j = 0; j < byLineType[i].size(); j++) {
@@ -51,12 +61,19 @@ void Loader::loadModel(std::shared_ptr<Model> model) {
                 }
             }
         }
-        glGenVertexArrays(1, &model->lineVAOs[i]);
-        glGenBuffers(1, &model->lineVBOs[i]);
-        glBindVertexArray(model->lineVAOs[i]);
-        glBindBuffer(GL_ARRAY_BUFFER, model->lineVBOs[i]);
-        glBufferData(GL_ARRAY_BUFFER, buffer.size() * sizeof(float), &buffer[0], GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+        if (!buffer.empty()) {
+            glGenVertexArrays(1, &model->lineVAOs[i]);
+            glGenBuffers(1, &model->lineVBOs[i]);
+            glBindVertexArray(model->lineVAOs[i]);
+            glBindBuffer(GL_ARRAY_BUFFER, model->lineVBOs[i]);
+            glBufferData(GL_ARRAY_BUFFER, buffer.size() * sizeof(float), buffer.data(),
+                         GL_STATIC_DRAW);
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+            glEnableVertexAttribArray(0);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            glBindVertexArray(0);
+            model->lineVertexCount[i] = buffer.size() / 3;
+        }
     }
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);

@@ -5,8 +5,8 @@
 #include <string>
 
 struct Model {
-    std::vector<unsigned int> polyVAOs, polyVBOs;
-    std::vector<unsigned int> lineVAOs, lineVBOs;
+    std::vector<unsigned int> polyVAOs, polyVBOs, polyVertexCount;
+    std::vector<unsigned int> lineVAOs, lineVBOs, lineVertexCount;
     std::vector<glm::vec3> points;
     std::vector<std::shared_ptr<Polygon>> polygons;
     Model(std::string path);

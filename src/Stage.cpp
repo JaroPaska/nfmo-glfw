@@ -1,27 +1,26 @@
 #include "Get.h"
 #include "Stage.h"
 #include <fstream>
+#include <iostream>
 
 Stage::Stage() {}
 
-Stage::Stage(int stage) {
+Stage::Stage(std::string path) {
     std::string string;
-    std::ifstream reader("stages/" + std::to_string(stage) + ".txt");
+    std::ifstream reader(path);
     while (getline(reader, string)) {
         if (string.rfind("snap(", 0) == 0)
             snap = getvec3(string);
         if (string.rfind("sky(", 0) == 0)
-            osky = getvec3(string);
+            sky = getvec3(string);
         if (string.rfind("fog(", 0) == 0)
-            ofog = getvec3(string);
+            fog = getvec3(string);
         if (string.rfind("ground(", 0) == 0)
-            ogrnd = getvec3(string);
+            grnd = getvec3(string);
         if (string.rfind("fadefrom(", 0) == 0)
             fadefrom = getfloat(string, 0);
         if (string.rfind("nlaps(", 0) == 0)
             nlaps = getint(string, 0);
-        if (string.rfind("snap(", 0) == 0)
-            snap = getvec3(string) / 100.f;
         if (string.rfind("set(", 0) == 0 || string.rfind("chk(", 0) == 0 ||
             string.rfind("fix(", 0) == 0) {
             int type = getint(string, 0);
@@ -41,15 +40,13 @@ Stage::Stage(int stage) {
                 y = GROUND;
                 xz = getfloat(string, 3);
             }
-            std::shared_ptr<StagePart> stagepart(new StagePart(type, x, y, z, xz));
-            stageparts.push_back(stagepart);
+            std::shared_ptr<StagePart> stagePart(new StagePart(type, x, y, z, xz));
+            stageParts.push_back(stagePart);
             if (string.rfind("chk(", 0) == 0)
-                checkpoints.push_back(stagepart);
+                checkPoints.push_back(stagePart);
             if (string.rfind("fix(", 0) == 0)
-                fixpoints.push_back(stagepart);
+                fixPoints.push_back(stagePart);
         }
     }
-    sky = osky * (glm::vec3(1) + snap);
-    fog = ofog * (glm::vec3(1) + snap);
-    grnd = ogrnd * (glm::vec3(1) + snap);
+    reader.close();
 }

@@ -3,16 +3,19 @@
 #include <fstream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
 
 Model::Model(std::string path) {
     std::string string;
-    std::ifstream reader(path + "/modelInfo.txt");
+    std::ifstream reader(path + "/modelInfo");
     while (getline(reader, string)) {
         if (string.rfind("v(", 0) == 0)
             points.push_back(getvec3(string));
         if (string.rfind("<p>", 0) == 0)
             polygons.push_back(std::shared_ptr<Polygon>(new Polygon()));
         if (!polygons.empty()) {
+            if (string.rfind("n(", 0) == 0)
+                polygons.back()->normal = getvec3(string);
             if (string.rfind("c(", 0) == 0)
                 polygons.back()->color = getvec3(string);
             if (string.rfind("colnum(", 0) == 0)
@@ -37,6 +40,7 @@ Model::Model(std::string path) {
             }
         }
     }
+    reader.close();
 }
 
 Model::~Model() {
