@@ -6,5 +6,7 @@
 
 struct Loader {
     static void loadModel(std::shared_ptr<Model> model);
+    static void loadModels();
+    static void loadShaders();
 };
 #endif

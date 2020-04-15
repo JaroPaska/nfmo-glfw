@@ -15,8 +15,6 @@ struct Renderer {
     static std::shared_ptr<StageObject> camera;
     static glm::mat4 view;
     static glm::mat4 projection;
-    static void loadShaders();
-    static void loadModels();
     static void renderPolys(std::shared_ptr<StagePart> stagePart, int polyType);
     static void render(std::shared_ptr<Stage> stage);
 };
