@@ -7,7 +7,9 @@ int main() {
     Window::createWindow(1280, 720, "NFM Origins");
     Loader::loadShaders();
     Loader::loadModels();
-    std::shared_ptr<Stage> stage(new Stage("stages/2.txt"));
+    Renderer::camera = std::shared_ptr<StageObject>(new StageObject());
+
+    std::shared_ptr<Stage> stage(new Stage("stages/18.txt"));
     while (!Window::shouldClose()) {
         Window::pollEvents();
         // do stuff
