@@ -23,7 +23,7 @@ int main() {
             Renderer::camera->rot = glm::rotate(Renderer::camera->rot, 0.01f, Y_AXIS);
         if (Window::getKey(GLFW_KEY_UP)) {
             glm::vec3 v = glm::vec3(glm::mat4(Renderer::camera->rot) * glm::vec4(0, 0, 100, 1));
-            v.x = -v.x;
+            v.x = -v.x; // why the fuck is this necessary
             Renderer::camera->pos += v;
         }
         if (Window::getKey(GLFW_KEY_DOWN)) {
