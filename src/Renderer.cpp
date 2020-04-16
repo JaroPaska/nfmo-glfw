@@ -42,12 +42,11 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
     glClear(GL_COLOR_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST);
     float f = std::max(Window::width, Window::height);
-    projection = glm::perspective(glm::radians(90.f), (float)Window::width / (float)Window::height,
+    projection = glm::perspective(glm::radians(60.f), (float)Window::width / (float)Window::height,
                                   100.f / f, 100000.f / f);
     projection = glm::scale(projection, glm::vec3(1 / f, -1 / f, -1 / f));
-    view = glm::mat4(1.f);
+    view = glm::mat4(-camera->rot);
     view = glm::translate(view, -camera->pos);
-    view *= glm::mat4(-camera->rot);
     // render ground
 
     //

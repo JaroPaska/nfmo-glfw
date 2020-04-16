@@ -8,15 +8,15 @@
 #include <vector>
 
 const float GROUND = 250;
-const glm::vec3 X_AXIS = glm::vec3(1.f, 0.f, 0.f);
-const glm::vec3 Y_AXIS = glm::vec3(0.f, -1.f, 0.f);
-const glm::vec3 Z_AXIS = glm::vec3(0.f, 0.f, 1.f);
+const glm::vec3 X_AXIS = glm::vec3(1, 0, 0);
+const glm::vec3 Y_AXIS = glm::vec3(0, -1, 0);
+const glm::vec3 Z_AXIS = glm::vec3(0, 0, 1);
 
 struct Stage {
     glm::vec3 snap = glm::vec3();
-    glm::vec3 sky = glm::vec3(170.f, 220.f, 255.f);
-    glm::vec3 grnd = glm::vec3(205.f, 200.f, 200.f);
-    glm::vec3 fog = glm::vec3(255.f, 220.f, 220.f);
+    glm::vec3 sky = glm::vec3(170, 220, 255);
+    glm::vec3 grnd = glm::vec3(205, 200, 200);
+    glm::vec3 fog = glm::vec3(255, 220, 220);
     float fadefrom;
     int nlaps;
     int nfix;
