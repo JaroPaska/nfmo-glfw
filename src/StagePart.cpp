@@ -10,6 +10,8 @@ StagePart::StagePart(int type, float x, float y, float z, float xz) {
 
 bool StagePart::isScenery(int type) { return type >= 65 && type <= 75; }
 
-bool StagePart::isCheckpoint(int type) { return type == CHECKPOINT || type == OFFROAD_CHECKPOINT; }
+bool StagePart::isCheckpoint(int type) {
+    return type == CHECKPOINT || type == OFFROAD_CHECKPOINT || type == ROLLERCOASTER_CHECKPOINT;
+}
 
 bool StagePart::isFixpoint(int type) { return type == FIXING_HOOP; }

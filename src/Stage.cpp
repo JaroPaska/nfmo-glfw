@@ -36,9 +36,12 @@ Stage::Stage(std::string path) {
             if (string.rfind("fix(", 0) == 0) {
                 y = getfloat(string, 3);
                 xz = getfloat(string, 4);
-            } else {
-                y = GROUND;
+            } else if (string.rfind("chk("), 0 == 0 && type == ROLLERCOASTER_CHECKPOINT) {
                 xz = getfloat(string, 3);
+                y = getfloat(string, 4);
+            } else {
+                xz = getfloat(string, 3);
+                y = GROUND;
             }
             std::shared_ptr<StagePart> stagePart(new StagePart(type, x, y, z, xz));
             stageParts.push_back(stagePart);

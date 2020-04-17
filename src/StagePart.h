@@ -35,6 +35,21 @@ const int WALL = 39;
 const int CHECKPOINT = 40;
 const int FIXING_HOOP = 41;
 const int OFFROAD_CHECKPOINT = 42;
+const int OFFROAD_BUMPY_SIDES_START = 43;
+const int OFFROAD_BUMPY_SIDES = 44;
+const int NORMAL_ROAD_RAISED_RAMP = 45;
+const int NORMAL_ROAD_RAISED = 46;
+const int NORMAL_ROAD_START = 47;
+const int OFFROAD_START = 48;
+const int TUNNEL_SIDE_RAMP = 49;
+const int LAUNCH_PAD_RAMP = 50;
+const int THE_NET = 51;
+const int SPEED_RAMP = 52;
+const int OFFROAD_HILL_RAMP = 53;
+const int BUMP_SLIDE = 54;
+const int OFFROAD_BIG_HILL_RAMP = 55;
+const int ROLLERCOASTER_START_END = 56;
+const int ROLLERCOASTER_CHECKPOINT = 64;
 
 struct StagePart : StageObject {
     int type;
