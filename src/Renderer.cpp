@@ -51,9 +51,9 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
 
     //
     glClear(GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_CULL_FACE);
+    /*glEnable(GL_CULL_FACE);
     glFrontFace(GL_CCW);
-    glCullFace(GL_BACK);
+    glCullFace(GL_BACK);*/
     glEnable(GL_DEPTH_TEST);
     polyShader->use();
     polyShader->setMat4("uni_projection", projection);

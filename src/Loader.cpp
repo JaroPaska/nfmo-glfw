@@ -29,20 +29,6 @@ void Loader::loadModel(std::shared_ptr<Model> model) {
                     for (int m = 0; m < 3; m++)
                         buffer.push_back(byPolyType[i][j]->color[m] / 255.f);
                 }
-                /*std::reverse(byPolyType[i][j]->triangles[k].begin(),
-                             byPolyType[i][j]->triangles[k].end());
-                byPolyType[i][j]->normal = -byPolyType[i][j]->normal;
-                for (int l = 0; l < 3; l++) {
-                    for (int m = 0; m < 3; m++)
-                        buffer.push_back(model->points[byPolyType[i][j]->triangles[k][l]][m]);
-                    for (int m = 0; m < 3; m++)
-                        buffer.push_back(byPolyType[i][j]->normal[m]);
-                    for (int m = 0; m < 3; m++)
-                        buffer.push_back(byPolyType[i][j]->color[m] / 255.f);
-                }
-                std::reverse(byPolyType[i][j]->triangles[k].begin(),
-                             byPolyType[i][j]->triangles[k].end());
-                byPolyType[i][j]->normal = -byPolyType[i][j]->normal;*/
             }
         }
         if (!buffer.empty()) {
