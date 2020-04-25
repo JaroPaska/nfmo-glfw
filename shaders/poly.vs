@@ -9,6 +9,7 @@ uniform mat4 uni_model;
 uniform mat4 uni_view;
 uniform mat4 uni_projection;
 uniform vec3 uni_snap;
+uniform vec3 uni_lightDirection;
 uniform bool uni_light;
 uniform bool uni_useUniColor;
 uniform vec3 uni_polyColor;
@@ -19,8 +20,10 @@ void main() {
     vec3 polyColor = in_polyColor;
     if (uni_useUniColor)
         polyColor = uni_polyColor;
-    if (!uni_light)
-        fs_polyColor = polyColor * (vec3(1) + uni_snap);
-    else
+    if (!uni_light) {
+        vec3 normal = normalize(mat3(inverse(uni_model)) * in_polyNormal);
+        float diff = max(dot(normal, uni_lightDirection), 0.0);
+        fs_polyColor = (0.7 + 0.3 * diff) * polyColor * (vec3(1) + uni_snap);
+    } else
         fs_polyColor = polyColor;
 }

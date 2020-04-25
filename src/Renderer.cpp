@@ -51,11 +51,15 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
 
     //
     glClear(GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_CULL_FACE);
+    glFrontFace(GL_CCW);
+    glCullFace(GL_BACK);
     glEnable(GL_DEPTH_TEST);
     polyShader->use();
     polyShader->setMat4("uni_projection", projection);
     polyShader->setMat4("uni_view", view);
     polyShader->setVec3("uni_snap", snap);
+    polyShader->setVec3("uni_lightDirection", stage->lightDirection);
     polyShader->setBool("uni_light", false);
     polyShader->setBool("uni_useUniColor", false);
     renderPolys(stage->stageParts, POLYS_FLAT_COLOR);

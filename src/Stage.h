@@ -17,6 +17,7 @@ struct Stage {
     glm::vec3 sky = glm::vec3(170, 220, 255);
     glm::vec3 grnd = glm::vec3(205, 200, 200);
     glm::vec3 fog = glm::vec3(255, 220, 220);
+    glm::vec3 lightDirection = -Y_AXIS;
     float fadefrom;
     int nlaps;
     int nfix;
