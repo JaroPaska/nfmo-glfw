@@ -29,9 +29,7 @@ void main() {
         vec3 N = normalize(mat3(transpose(uni_invModel)) * in_polyNormal);
         float diff = 0;
         if (sign(dot(N, uni_lightDirection)) == sign(dot(N, C - cameraPos)))
-            diff = dot(N, uni_lightDirection);
-        if (diff < 0)
-            diff = -diff;
+            diff = abs(dot(N, uni_lightDirection));
         fs_polyColor = (0.5 + 0.5 * diff) * polyColor * (vec3(1) + uni_snap);
     } else
         fs_polyColor = polyColor;
