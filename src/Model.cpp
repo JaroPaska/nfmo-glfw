@@ -33,6 +33,8 @@ Model::Model(std::string path) {
         if (!polygons.empty()) {
             if (string.rfind("n(", 0) == 0)
                 polygons.back()->normal = getvec3(string);
+            if (string.rfind("C(", 0) == 0)
+                polygons.back()->centroid = getvec3(string);
             if (string.rfind("c(", 0) == 0)
                 polygons.back()->color = getvec3(string);
             if (string.rfind("colnum(", 0) == 0)

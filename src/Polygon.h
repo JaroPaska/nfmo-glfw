@@ -18,6 +18,7 @@ struct Polygon {
     std::vector<int> pointIndices;
     std::vector<std::vector<int>> triangles;
     glm::vec3 normal = glm::vec3();
+    glm::vec3 centroid = glm::vec3();
     glm::vec3 color = glm::vec3();
     int polyType = POLYS_FLAT_COLOR;
     int lineType = LINES_NONE;

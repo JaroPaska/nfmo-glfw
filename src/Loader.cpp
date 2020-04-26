@@ -27,6 +27,8 @@ void Loader::loadModel(std::shared_ptr<Model> model) {
                     for (int m = 0; m < 3; m++)
                         buffer.push_back(byPolyType[i][j]->normal[m]);
                     for (int m = 0; m < 3; m++)
+                        buffer.push_back(byPolyType[i][j]->centroid[m]);
+                    for (int m = 0; m < 3; m++)
                         buffer.push_back(byPolyType[i][j]->color[m] / 255.f);
                 }
             }
@@ -38,14 +40,14 @@ void Loader::loadModel(std::shared_ptr<Model> model) {
             glBindBuffer(GL_ARRAY_BUFFER, model->polyVBOs[i]);
             glBufferData(GL_ARRAY_BUFFER, buffer.size() * sizeof(float), buffer.data(),
                          GL_STATIC_DRAW);
-            for (int j = 0; j < 3; j++) {
-                glVertexAttribPointer(j, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
+            for (int j = 0; j < 4; j++) {
+                glVertexAttribPointer(j, 3, GL_FLOAT, GL_FALSE, 12 * sizeof(float),
                                       (void *)(3 * j * sizeof(float)));
                 glEnableVertexAttribArray(j);
             }
             glBindBuffer(GL_ARRAY_BUFFER, 0);
             glBindVertexArray(0);
-            model->polyVertexCount[i] = buffer.size() / 9;
+            model->polyVertexCount[i] = buffer.size() / 12;
         }
     }
     model->lineVAOs.assign(LINES_TYPES, 0);

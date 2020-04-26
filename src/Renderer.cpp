@@ -17,6 +17,7 @@ void Renderer::renderPolys(std::shared_ptr<Model> model, std::shared_ptr<StageOb
         uni_model = glm::translate(uni_model, stageObject->pos);
         uni_model *= glm::mat4(stageObject->rot);
         polyShader->setMat4("uni_model", uni_model);
+        polyShader->setMat4("uni_invModel", glm::inverse(uni_model));
         glBindVertexArray(model->polyVAOs[polyType]);
         glDrawArrays(GL_TRIANGLES, 0, model->polyVertexCount[polyType]);
     }
@@ -58,6 +59,7 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
     polyShader->use();
     polyShader->setMat4("uni_projection", projection);
     polyShader->setMat4("uni_view", view);
+    polyShader->setMat4("uni_invView", glm::inverse(view));
     polyShader->setVec3("uni_snap", snap);
     polyShader->setVec3("uni_lightDirection", stage->lightDirection);
     polyShader->setBool("uni_light", false);
