@@ -68,7 +68,7 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
     polyShader->setBool("uni_useUniColor", true);
     polyShader->setVec3("uni_polyColor", glass);
     renderPolys(stage->stageParts, POLYS_GLASS);
-    polyShader->setBool("uni_light", true);
+    polyShader->setBool("uni_light", stage->lightson);
     polyShader->setBool("uni_useUniColor", false);
     renderPolys(stage->stageParts, POLYS_LIGHT);
 }
