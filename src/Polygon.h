@@ -8,7 +8,8 @@
 const int POLYS_FLAT_COLOR = 0;
 const int POLYS_GLASS = 1;
 const int POLYS_LIGHT = 2;
-const int POLYS_TYPES = 3;
+const int POLYS_FINISH = 3;
+const int POLYS_TYPES = 4;
 const int LINES_NONE = -1;
 const int LINES_FLAT_COLOR = 0;
 const int LINES_CHARGED = 1;

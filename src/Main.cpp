@@ -9,7 +9,8 @@ int main() {
     Loader::loadModels();
     Renderer::camera = std::shared_ptr<StageObject>(new StageObject());
 
-    std::shared_ptr<Stage> stage(new Stage("stages/32.txt"));
+    std::shared_ptr<Stage> stage(new Stage("stages/1.txt"));
+    stage->groundModel = RawModel::ground(200000.f, 8);
     while (!Window::shouldClose()) {
         Window::pollEvents();
         // do stuff
@@ -18,9 +19,9 @@ int main() {
         if (Window::getKey(GLFW_KEY_ENTER))
             Renderer::camera->pos.y += 10.f;
         if (Window::getKey(GLFW_KEY_LEFT))
-            Renderer::camera->rot = glm::rotate(Renderer::camera->rot, -0.04f, Y_AXIS);
+            Renderer::camera->rot = glm::rotate(Renderer::camera->rot, -0.02f, Y_AXIS);
         if (Window::getKey(GLFW_KEY_RIGHT))
-            Renderer::camera->rot = glm::rotate(Renderer::camera->rot, 0.04f, Y_AXIS);
+            Renderer::camera->rot = glm::rotate(Renderer::camera->rot, 0.02f, Y_AXIS);
         if (Window::getKey(GLFW_KEY_UP)) {
             glm::vec3 v = glm::vec3(glm::mat4(Renderer::camera->rot) * glm::vec4(0, 0, 100, 1));
             v.x = -v.x; // why the fuck is this necessary

@@ -1,4 +1,5 @@
 #include "Get.h"
+#include "Loader.h"
 #include "Model.h"
 #include <fstream>
 #include <glad/glad.h>
@@ -6,21 +7,7 @@
 #include <algorithm>
 #include <iostream>
 
-bool ccw(glm::vec3 a, glm::vec3 b, glm::vec3 c) {
-    glm::vec3 axis_x = glm::normalize(b - a);
-    glm::vec3 axis_y = glm::normalize(c - a);
-    glm::vec3 axis_z = glm::cross(axis_x, axis_y);
-
-    glm::mat3x3 object_transform;
-    object_transform[0] = axis_x;
-    object_transform[1] = axis_y;
-    object_transform[2] = axis_z;
-
-    glm::mat3x3 object_to_world_transform = glm::inverse(object_transform);
-    glm::vec3 normal = object_to_world_transform * axis_z;
-
-    return normal.z > 0;
-}
+Model::Model() {}
 
 Model::Model(std::string path) {
     std::string string;
@@ -43,6 +30,8 @@ Model::Model(std::string path) {
                 polygons.back()->polyType = POLYS_GLASS;
             if (string.rfind("light(", 0) == 0)
                 polygons.back()->polyType = POLYS_LIGHT;
+            if (string.rfind("finish(", 0) == 0)
+                polygons.back()->polyType = POLYS_FINISH;
             if (string.rfind("outline(", 0) == 0)
                 polygons.back()->lineType = LINES_FLAT_COLOR;
             if (string.rfind("charged(", 0) == 0)

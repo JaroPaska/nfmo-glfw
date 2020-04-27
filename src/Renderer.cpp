@@ -13,7 +13,7 @@ glm::mat4 Renderer::projection;
 void Renderer::renderPolys(std::shared_ptr<Model> model, std::shared_ptr<StageObject> stageObject,
                            int polyType) {
     if (model->polyVAOs[polyType]) {
-        glm::mat4 uni_model = glm::mat4(1.f);
+        glm::mat4 uni_model = glm::mat4(1);
         uni_model = glm::translate(uni_model, stageObject->pos);
         uni_model *= glm::mat4(stageObject->rot);
         polyShader->setMat4("uni_model", uni_model);
@@ -48,21 +48,27 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
     projection = glm::scale(projection, glm::vec3(1 / f, -1 / f, -1 / f));
     view = glm::mat4(-camera->rot);
     view = glm::translate(view, -camera->pos);
-    // render ground
-
-    //
-    glClear(GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     /*glEnable(GL_CULL_FACE);
     glFrontFace(GL_CCW);
     glCullFace(GL_BACK);*/
-    glEnable(GL_DEPTH_TEST);
     polyShader->use();
+    glDisable(GL_DEPTH_TEST);
     polyShader->setMat4("uni_projection", projection);
     polyShader->setMat4("uni_view", view);
     polyShader->setMat4("uni_invView", glm::inverse(view));
+    glm::mat4 uni_model = glm::mat4(1);
+    uni_model = glm::translate(uni_model, glm::vec3(0, 250, 0));
+    polyShader->setMat4("uni_model", uni_model);
+    polyShader->setMat4("uni_invModel", glm::inverse(uni_model));
     polyShader->setVec3("uni_snap", snap);
     polyShader->setVec3("uni_lightDirection", stage->lightDirection);
     polyShader->setBool("uni_light", false);
+    polyShader->setBool("uni_useUniColor", true);
+    polyShader->setVec3("uni_polyColor", stage->grnd / 255.f);
+    glBindVertexArray(stage->groundModel->VAO);
+    glDrawArrays(GL_TRIANGLES, 0, stage->groundModel->vertices);
+    glEnable(GL_DEPTH_TEST);
     polyShader->setBool("uni_useUniColor", false);
     renderPolys(stage->stageParts, POLYS_FLAT_COLOR);
     polyShader->setBool("uni_useUniColor", true);

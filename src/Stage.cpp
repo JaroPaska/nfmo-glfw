@@ -19,6 +19,8 @@ Stage::Stage(std::string path) {
             grnd = getvec3(string);
         if (string.rfind("fadefrom(", 0) == 0)
             fadefrom = getfloat(string, 0);
+        if (string.rfind("lightson(") == 0)
+            lightson = true;
         if (string.rfind("nlaps(", 0) == 0)
             nlaps = getint(string, 0);
         if (string.rfind("set(", 0) == 0 || string.rfind("chk(", 0) == 0 ||
