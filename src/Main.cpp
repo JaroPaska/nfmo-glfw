@@ -9,7 +9,7 @@ int main() {
     Loader::loadModels();
     Renderer::camera = std::shared_ptr<StageObject>(new StageObject());
 
-    std::shared_ptr<Stage> stage(new Stage("stages/18.txt"));
+    std::shared_ptr<Stage> stage(new Stage("stages/5.txt"));
     stage->groundModel = RawModel::ground(200000.f, 8);
     while (!Window::shouldClose()) {
         Window::pollEvents();
