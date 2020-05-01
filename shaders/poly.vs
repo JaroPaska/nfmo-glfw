@@ -5,6 +5,7 @@ layout(location = 2) in vec3 in_polyCentroid;
 layout(location = 3) in vec3 in_polyColor;
 
 out vec3 fs_polyColor;
+out vec4 fs_fragViewPos;
 
 uniform mat4 uni_model;
 uniform mat4 uni_invModel;
@@ -19,7 +20,8 @@ uniform bool uni_useUniColor;
 uniform vec3 uni_polyColor;
 
 void main() {
-    gl_Position = uni_projection * uni_view * uni_model * vec4(in_vertexPos, 1.0);
+    fs_fragViewPos = uni_view * uni_model * vec4(in_vertexPos, 1.0);
+    gl_Position = uni_projection * fs_fragViewPos;
 
     vec3 polyColor = in_polyColor;
     if (uni_useUniColor)

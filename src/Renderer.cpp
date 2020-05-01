@@ -43,6 +43,7 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
     glm::vec3 sky = stage->sky / 255.f;
     sky = sky * (glm::vec3(1.f) + snap);
     glm::vec3 fog = stage->fog / 255.f;
+    fog = fog * (glm::vec3(1.f) + snap);
     glm::vec3 grnd = stage->grnd / 255.f;
     glm::vec3 glass = stage->sky / 255.f;
     glClearColor(sky.r, sky.g, sky.b, 1.0f);
@@ -71,6 +72,10 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
     polyShader->setBool("uni_light", false);
     polyShader->setBool("uni_doSnap", true);
     polyShader->setBool("uni_useUniColor", false);
+    polyShader->setBool("uni_doFog", false);
+    polyShader->setVec3("uni_fog", fog);
+    polyShader->setFloat("uni_fadefrom", 3500);
+    polyShader->setFloat("uni_density", 0.9);
     renderPolys(stage->groundModel, POLYS_FLAT_COLOR);
     renderPolys(stage->polys1Model, POLYS_FLAT_COLOR);
     renderPolys(stage->polys2Model, POLYS_FLAT_COLOR);
@@ -90,6 +95,7 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
     polyShader->setMat4("uni_projection", projection);
     polyShader->setBool("uni_light", true);
     polyShader->setBool("uni_doSnap", true);
+    polyShader->setBool("uni_doFog", false);
     renderPolys(stage->cloudsModel, POLYS_FLAT_COLOR);
     renderPolys(stage->mountainsModel, POLYS_FLAT_COLOR);
 }
