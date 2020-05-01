@@ -32,7 +32,7 @@ std::shared_ptr<RawModel> RawModel::ground(float size, int parts) {
     float step = size / parts;
     for (int i = 0; i <= parts; i++)
         for (int j = 0; j <= parts; j++)
-            pts[i][j] = glm::vec3(-size / 2 + i * step, 0, -size / 2 + j * step);
+            pts[i][j] = glm::vec3(-size / 2 + i * step, 250, -size / 2 + j * step);
 
     std::vector<float> buffer;
     for (int i = 0; i < parts; i++)

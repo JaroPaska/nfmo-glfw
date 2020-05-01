@@ -11,9 +11,10 @@ uniform mat4 uni_invModel;
 uniform mat4 uni_view;
 uniform mat4 uni_invView;
 uniform mat4 uni_projection;
+uniform bool uni_doSnap;
 uniform vec3 uni_snap;
-uniform vec3 uni_lightDirection;
 uniform bool uni_light;
+uniform vec3 uni_lightDirection;
 uniform bool uni_useUniColor;
 uniform vec3 uni_polyColor;
 
@@ -30,7 +31,9 @@ void main() {
         float diff = 0;
         if (sign(dot(N, uni_lightDirection)) == sign(dot(N, C - cameraPos)))
             diff = abs(dot(N, uni_lightDirection));
-        fs_polyColor = (0.5 + 0.5 * diff) * polyColor * (vec3(1) + uni_snap);
+        fs_polyColor = (0.5 + 0.5 * diff) * polyColor;
     } else
         fs_polyColor = polyColor;
+    if (uni_doSnap)
+        fs_polyColor = fs_polyColor * (vec3(1) + uni_snap);
 }

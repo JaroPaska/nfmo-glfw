@@ -1,4 +1,5 @@
 #include "Get.h"
+#include "Loader.h"
 #include "Stage.h"
 #include <fstream>
 #include <iostream>
@@ -7,7 +8,7 @@ Stage::Stage() {}
 
 Stage::Stage(std::string path) {
     std::string string;
-    std::ifstream reader(path);
+    std::ifstream reader(path + "/stageInfo");
     while (getline(reader, string)) {
         if (string.rfind("snap(", 0) == 0)
             snap = getvec3(string);
@@ -53,5 +54,15 @@ Stage::Stage(std::string path) {
                 fixPoints.push_back(stagePart);
         }
     }
+    groundModel = std::shared_ptr<Model>(new Model(path + "/ground"));
+    Loader::loadModel(groundModel);
+    polys1Model = std::shared_ptr<Model>(new Model(path + "/polys1"));
+    Loader::loadModel(polys1Model);
+    polys2Model = std::shared_ptr<Model>(new Model(path + "/polys2"));
+    Loader::loadModel(polys2Model);
+    cloudsModel = std::shared_ptr<Model>(new Model(path + "/clouds"));
+    Loader::loadModel(cloudsModel);
+    mountainsModel = std::shared_ptr<Model>(new Model(path + "/mountains"));
+    Loader::loadModel(mountainsModel);
     reader.close();
 }

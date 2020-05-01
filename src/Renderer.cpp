@@ -10,6 +10,13 @@ std::shared_ptr<StageObject> Renderer::camera;
 glm::mat4 Renderer::view;
 glm::mat4 Renderer::projection;
 
+void Renderer::renderPolys(std::shared_ptr<Model> model, int polyType) {
+    if (model->polyVAOs[polyType]) {
+        glBindVertexArray(model->polyVAOs[polyType]);
+        glDrawArrays(GL_TRIANGLES, 0, model->polyVertexCount[polyType]);
+    }
+}
+
 void Renderer::renderPolys(std::shared_ptr<Model> model, std::shared_ptr<StageObject> stageObject,
                            int polyType) {
     if (model->polyVAOs[polyType]) {
@@ -18,8 +25,7 @@ void Renderer::renderPolys(std::shared_ptr<Model> model, std::shared_ptr<StageOb
         uni_model *= glm::mat4(stageObject->rot);
         polyShader->setMat4("uni_model", uni_model);
         polyShader->setMat4("uni_invModel", glm::inverse(uni_model));
-        glBindVertexArray(model->polyVAOs[polyType]);
-        glDrawArrays(GL_TRIANGLES, 0, model->polyVertexCount[polyType]);
+        renderPolys(model, polyType);
     }
 }
 
@@ -58,23 +64,32 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
     polyShader->setMat4("uni_view", view);
     polyShader->setMat4("uni_invView", glm::inverse(view));
     glm::mat4 uni_model = glm::mat4(1);
-    uni_model = glm::translate(uni_model, glm::vec3(0, 250, 0));
     polyShader->setMat4("uni_model", uni_model);
     polyShader->setMat4("uni_invModel", glm::inverse(uni_model));
     polyShader->setVec3("uni_snap", snap);
     polyShader->setVec3("uni_lightDirection", stage->lightDirection);
     polyShader->setBool("uni_light", false);
-    polyShader->setBool("uni_useUniColor", true);
-    polyShader->setVec3("uni_polyColor", stage->grnd / 255.f);
-    glBindVertexArray(stage->groundModel->VAO);
-    glDrawArrays(GL_TRIANGLES, 0, stage->groundModel->vertices);
-    glEnable(GL_DEPTH_TEST);
+    polyShader->setBool("uni_doSnap", true);
     polyShader->setBool("uni_useUniColor", false);
+    renderPolys(stage->groundModel, POLYS_FLAT_COLOR);
+    renderPolys(stage->polys1Model, POLYS_FLAT_COLOR);
+    renderPolys(stage->polys2Model, POLYS_FLAT_COLOR);
+    glEnable(GL_DEPTH_TEST);
     renderPolys(stage->stageParts, POLYS_FLAT_COLOR);
     polyShader->setBool("uni_useUniColor", true);
     polyShader->setVec3("uni_polyColor", glass);
     renderPolys(stage->stageParts, POLYS_GLASS);
     polyShader->setBool("uni_light", stage->lightson);
+    polyShader->setBool("uni_doSnap", false);
     polyShader->setBool("uni_useUniColor", false);
     renderPolys(stage->stageParts, POLYS_LIGHT);
+
+    projection = glm::perspective(glm::radians(60.f), (float)Window::width / (float)Window::height,
+                                  750.f / f, 750000.f / f);
+    projection = glm::scale(projection, glm::vec3(1 / f, -1 / f, -1 / f));
+    polyShader->setMat4("uni_projection", projection);
+    polyShader->setBool("uni_light", true);
+    polyShader->setBool("uni_doSnap", true);
+    renderPolys(stage->cloudsModel, POLYS_FLAT_COLOR);
+    renderPolys(stage->mountainsModel, POLYS_FLAT_COLOR);
 }
