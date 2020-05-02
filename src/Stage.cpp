@@ -20,7 +20,7 @@ Stage::Stage(std::string path) {
             grnd = getvec3(string);
         if (string.rfind("fadefrom(", 0) == 0)
             fadefrom = getfloat(string, 0);
-        if (string.rfind("lightson(") == 0)
+        if (string.rfind("lightson(", 0) == 0)
             lightson = true;
         if (string.rfind("nlaps(", 0) == 0)
             nlaps = getint(string, 0);
@@ -39,7 +39,7 @@ Stage::Stage(std::string path) {
             if (string.rfind("fix(", 0) == 0) {
                 y = getfloat(string, 3);
                 xz = getfloat(string, 4);
-            } else if (string.rfind("chk("), 0 == 0 && type == ROLLERCOASTER_CHECKPOINT) {
+            } else if (string.rfind("chk(", 0) == 0 && type == ROLLERCOASTER_CHECKPOINT) {
                 xz = getfloat(string, 3);
                 y = getfloat(string, 4);
             } else {
@@ -52,6 +52,46 @@ Stage::Stage(std::string path) {
                 checkPoints.push_back(stagePart);
             if (string.rfind("fix(", 0) == 0)
                 fixPoints.push_back(stagePart);
+        }
+        if (string.rfind("maxr(", 0) == 0) {
+            int n = getint(string, 0);
+            float x = getfloat(string, 1);
+            float sz = getfloat(string, 2);
+            for (int i = 0; i < n; i++) {
+                std::shared_ptr<StagePart> stagePart(
+                    new StagePart(THE_WALL, x, GROUND, sz + i * 4800, 0));
+                stageParts.push_back(stagePart);
+            }
+        }
+        if (string.rfind("maxl(", 0) == 0) {
+            int n = getint(string, 0);
+            float x = getfloat(string, 1);
+            float sz = getfloat(string, 2);
+            for (int i = 0; i < n; i++) {
+                std::shared_ptr<StagePart> stagePart(
+                    new StagePart(THE_WALL, x, GROUND, sz + i * 4800, 180));
+                stageParts.push_back(stagePart);
+            }
+        }
+        if (string.rfind("maxt(", 0) == 0) {
+            int n = getint(string, 0);
+            float z = getfloat(string, 1);
+            float sx = getfloat(string, 2);
+            for (int i = 0; i < n; i++) {
+                std::shared_ptr<StagePart> stagePart(
+                    new StagePart(THE_WALL, sx + i * 4800, GROUND, z, 90));
+                stageParts.push_back(stagePart);
+            }
+        }
+        if (string.rfind("maxb(", 0) == 0) {
+            int n = getint(string, 0);
+            float z = getfloat(string, 1);
+            float sx = getfloat(string, 2);
+            for (int i = 0; i < n; i++) {
+                std::shared_ptr<StagePart> stagePart(
+                    new StagePart(THE_WALL, sx + i * 4800, GROUND, z, -90));
+                stageParts.push_back(stagePart);
+            }
         }
     }
     groundModel = std::shared_ptr<Model>(new Model(path + "/ground"));
