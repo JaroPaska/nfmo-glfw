@@ -51,7 +51,7 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
     glDisable(GL_DEPTH_TEST);
     float f = std::max(Window::width, Window::height);
     projection = glm::perspective(glm::radians(60.f), (float)Window::width / (float)Window::height,
-                                  100.f / f, 100000.f / f);
+                                  100.f / f, 1000000.f / f);
     projection = glm::scale(projection, glm::vec3(1 / f, -1 / f, -1 / f));
     view = glm::mat4(-camera->rot);
     view = glm::translate(view, -camera->pos);
@@ -89,9 +89,9 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
     polyShader->setBool("uni_useUniColor", false);
     renderPolys(stage->stageParts, POLYS_LIGHT);
 
-    projection = glm::perspective(glm::radians(60.f), (float)Window::width / (float)Window::height,
-                                  750.f / f, 750000.f / f);
-    projection = glm::scale(projection, glm::vec3(1 / f, -1 / f, -1 / f));
+    /*projection = glm::perspective(glm::radians(60.f), (float)Window::width /
+    (float)Window::height, 750.f / f, 750000.f / f);
+    projection = glm::scale(projection, glm::vec3(1 / f, -1 / f, -1 / f));*/
     polyShader->setMat4("uni_projection", projection);
     polyShader->setBool("uni_light", true);
     polyShader->setBool("uni_doSnap", true);
