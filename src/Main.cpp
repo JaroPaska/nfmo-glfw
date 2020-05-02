@@ -4,7 +4,7 @@
 #include "Window.h"
 
 int main() {
-    Window::createWindow(1280, 720, "NFM Origins");
+    Window::createWindow(1600, 900, "NFM Origins");
     Loader::loadShaders();
     Loader::loadModels();
     Renderer::camera = std::shared_ptr<StageObject>(new StageObject());
