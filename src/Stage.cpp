@@ -25,7 +25,7 @@ Stage::Stage(std::string path) {
         if (string.rfind("nlaps(", 0) == 0)
             nlaps = getint(string, 0);
         if (string.rfind("set(", 0) == 0 || string.rfind("chk(", 0) == 0 ||
-            string.rfind("fix(", 0) == 0) {
+            string.rfind("fix(", 0) == 0 && nfix > 0) {
             int type = getint(string, 0);
             if (!scenery && StagePart::isScenery(type))
                 continue;

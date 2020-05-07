@@ -29,7 +29,7 @@ struct Stage {
     float fadefrom = 7500;
     bool lightson = false;
     int nlaps = 0;
-    int nfix = 0;
+    int nfix = 1;
     bool scenery = true;
     std::vector<std::shared_ptr<StagePart>> stageParts;
     std::vector<std::shared_ptr<StagePart>> checkPoints;
