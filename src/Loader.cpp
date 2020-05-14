@@ -24,6 +24,5 @@ void Loader::loadModels() {
 }
 
 void Loader::loadShaders() {
-    Renderer::polyShader =
-        std::shared_ptr<Shader>(new Shader("shaders/poly.vs", "shaders/poly.fs"));
+    Renderer::polyShader = std::make_shared<Shader>("shaders/poly.vs", "shaders/poly.fs");
 }
