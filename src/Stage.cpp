@@ -95,14 +95,9 @@ Stage::Stage(std::string path) {
         }
     }
     groundModel = std::make_shared<Model>(path + "/ground");
-    Loader::loadModel(groundModel.get());
     polys1Model = std::make_shared<Model>(path + "/polys1");
-    Loader::loadModel(polys1Model.get());
     polys2Model = std::make_shared<Model>(path + "/polys2");
-    Loader::loadModel(polys2Model.get());
     cloudsModel = std::make_shared<Model>(path + "/clouds");
-    Loader::loadModel(cloudsModel.get());
     mountainsModel = std::make_shared<Model>(path + "/mountains");
-    Loader::loadModel(mountainsModel.get());
     reader.close();
 }
