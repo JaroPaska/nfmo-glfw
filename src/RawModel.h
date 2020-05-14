@@ -9,6 +9,6 @@ struct RawModel {
     int vertices;
     RawModel();
     ~RawModel();
-    static std::shared_ptr<RawModel> ground(float size, int parts);
+    static const std::shared_ptr<RawModel> &ground(float size, int parts);
 };
 #endif

@@ -27,7 +27,7 @@ void addVertex(glm::vec3 pos, glm::vec3 normal, glm::vec3 centroid, glm::vec3 co
         buffer.push_back(color[i]);
 }
 
-std::shared_ptr<RawModel> RawModel::ground(float size, int parts) {
+const std::shared_ptr<RawModel> &RawModel::ground(float size, int parts) {
     std::vector<std::vector<glm::vec3>> pts(parts + 1, std::vector<glm::vec3>(parts + 1));
     float step = size / parts;
     for (int i = 0; i <= parts; i++)
