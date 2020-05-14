@@ -2,5 +2,5 @@
 
 CarModel::CarModel(std::string path) : Model(path) {
     for (int i = 0; i < 4; i++)
-        wheelModels[i] = std::shared_ptr<Model>(new Model(path + "/wheel"));
+        wheelModels[i] = std::make_shared<Model>(path + "/wheel");
 }

@@ -16,7 +16,7 @@ Model::Model(std::string path) {
         if (string.rfind("v(", 0) == 0)
             points.push_back(getvec3(string));
         if (string.rfind("<p>", 0) == 0)
-            polygons.push_back(std::shared_ptr<Polygon>(new Polygon()));
+            polygons.push_back(std::make_shared<Polygon>());
         if (!polygons.empty()) {
             if (string.rfind("n(", 0) == 0)
                 polygons.back()->normal = getvec3(string);

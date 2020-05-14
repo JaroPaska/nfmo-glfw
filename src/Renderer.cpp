@@ -10,15 +10,14 @@ std::shared_ptr<StageObject> Renderer::camera;
 glm::mat4 Renderer::view;
 glm::mat4 Renderer::projection;
 
-void Renderer::renderPolys(std::shared_ptr<Model> model, int polyType) {
+void Renderer::renderPolys(Model *model, int polyType) {
     if (model->polyVAOs[polyType]) {
         glBindVertexArray(model->polyVAOs[polyType]);
         glDrawArrays(GL_TRIANGLES, 0, model->polyVertexCount[polyType]);
     }
 }
 
-void Renderer::renderPolys(std::shared_ptr<Model> model, std::shared_ptr<StageObject> stageObject,
-                           int polyType) {
+void Renderer::renderPolys(Model *model, StageObject *stageObject, int polyType) {
     if (model->polyVAOs[polyType]) {
         glm::mat4 uni_model = glm::mat4(1);
         uni_model = glm::translate(uni_model, stageObject->pos);
@@ -29,16 +28,17 @@ void Renderer::renderPolys(std::shared_ptr<Model> model, std::shared_ptr<StageOb
     }
 }
 
-void Renderer::renderPolys(std::shared_ptr<StagePart> stagePart, int polyType) {
-    renderPolys(models[stagePart->type], stagePart, polyType);
+void Renderer::renderPolys(StagePart *stagePart, int polyType) {
+    renderPolys(models[stagePart->type].get(), stagePart, polyType);
 }
 
-void Renderer::renderPolys(std::vector<std::shared_ptr<StagePart>> stageParts, int polyType) {
+void Renderer::renderPolys(const std::vector<std::shared_ptr<StagePart>> &stageParts,
+                           int polyType) {
     for (int i = 0; i < stageParts.size(); i++)
-        renderPolys(stageParts[i], polyType);
+        renderPolys(stageParts[i].get(), polyType);
 }
 
-void Renderer::render(std::shared_ptr<Stage> stage) {
+void Renderer::render(Stage *stage) {
     glm::vec3 snap = stage->snap / 100.f;
     glm::vec3 sky = stage->sky / 255.f;
     sky = sky * (glm::vec3(1.f) + snap);
@@ -76,9 +76,9 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
     polyShader->setVec3("uni_fog", fog);
     polyShader->setFloat("uni_fadefrom", 3500);
     polyShader->setFloat("uni_density", 0.9);
-    renderPolys(stage->groundModel, POLYS_FLAT_COLOR);
-    renderPolys(stage->polys1Model, POLYS_FLAT_COLOR);
-    renderPolys(stage->polys2Model, POLYS_FLAT_COLOR);
+    renderPolys(stage->groundModel.get(), POLYS_FLAT_COLOR);
+    renderPolys(stage->polys1Model.get(), POLYS_FLAT_COLOR);
+    renderPolys(stage->polys2Model.get(), POLYS_FLAT_COLOR);
     glEnable(GL_DEPTH_TEST);
     renderPolys(stage->stageParts, POLYS_FLAT_COLOR);
     polyShader->setBool("uni_useUniColor", true);
@@ -96,6 +96,6 @@ void Renderer::render(std::shared_ptr<Stage> stage) {
     polyShader->setBool("uni_light", true);
     polyShader->setBool("uni_doSnap", true);
     polyShader->setBool("uni_doFog", false);
-    renderPolys(stage->cloudsModel, POLYS_FLAT_COLOR);
-    renderPolys(stage->mountainsModel, POLYS_FLAT_COLOR);
+    renderPolys(stage->cloudsModel.get(), POLYS_FLAT_COLOR);
+    renderPolys(stage->mountainsModel.get(), POLYS_FLAT_COLOR);
 }

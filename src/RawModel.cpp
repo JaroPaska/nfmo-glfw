@@ -45,7 +45,7 @@ std::shared_ptr<RawModel> RawModel::ground(float size, int parts) {
             addVertex(pts[i + 1][j], Y_AXIS, centroid, glm::vec3(0), buffer);
             addVertex(pts[i + 1][j + 1], Y_AXIS, centroid, glm::vec3(0), buffer);
         }
-    std::shared_ptr<RawModel> rawModel = std::shared_ptr<RawModel>(new RawModel());
+    std::shared_ptr<RawModel> rawModel = std::make_shared<RawModel>();
     glGenVertexArrays(1, &rawModel->VAO);
     glGenBuffers(1, &rawModel->VBO);
     glBindVertexArray(rawModel->VAO);

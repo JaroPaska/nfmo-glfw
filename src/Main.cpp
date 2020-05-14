@@ -7,9 +7,9 @@ int main() {
     Window::createWindow(1600, 900, "NFM Origins");
     Loader::loadShaders();
     Loader::loadModels();
-    Renderer::camera = std::shared_ptr<StageObject>(new StageObject());
+    Renderer::camera = std::make_shared<StageObject>();
 
-    std::shared_ptr<Stage> stage(new Stage("stages/26"));
+    std::shared_ptr<Stage> stage = std::make_shared<Stage>("stages/26");
     while (!Window::shouldClose()) {
         Window::pollEvents();
         // do stuff
@@ -31,7 +31,7 @@ int main() {
             v.x = -v.x;
             Renderer::camera->pos -= v;
         }
-        Renderer::render(stage);
+        Renderer::render(stage.get());
         //
         Window::swapBuffers();
     }

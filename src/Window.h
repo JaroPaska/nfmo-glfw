@@ -7,7 +7,7 @@ struct Window {
     static GLFWwindow *window;
     static int width;
     static int height;
-    static void createWindow(int width, int height, const char* title);
+    static void createWindow(int width, int height, const char *title);
     static bool shouldClose();
     static void pollEvents();
     static void swapBuffers();
@@ -15,5 +15,5 @@ struct Window {
     static int getKey(int key);
 };
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 #endif

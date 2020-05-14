@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <iostream>
 
-void Loader::loadModel(std::shared_ptr<Model> model) {
+void Loader::loadModel(Model *model) {
     std::vector<std::vector<std::shared_ptr<Polygon>>> byPolyType(POLYS_TYPES);
     std::vector<std::vector<std::shared_ptr<Polygon>>> byLineType(LINES_TYPES);
     for (int i = 0; i < model->polygons.size(); i++) {
@@ -98,8 +98,8 @@ void Loader::loadModels() {
         "tree6",         "tree7",    "tree8",         "cac1",     "cac2",      "cac3",
         "8sroad",        "8soffroad"};
     for (int i = 0; i < modelDirs.size(); i++) {
-        Renderer::models[i + 10] = std::shared_ptr<Model>(new Model("models/" + modelDirs[i]));
-        loadModel(Renderer::models[i + 10]);
+        Renderer::models[i + 10] = std::make_shared<Model>("models/" + modelDirs[i]);
+        loadModel(Renderer::models[i + 10].get());
     }
 }
 

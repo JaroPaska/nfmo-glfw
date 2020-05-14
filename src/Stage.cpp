@@ -46,7 +46,7 @@ Stage::Stage(std::string path) {
                 xz = getfloat(string, 3);
                 y = GROUND;
             }
-            std::shared_ptr<StagePart> stagePart(new StagePart(type, x, y, z, xz));
+            std::shared_ptr<StagePart> stagePart = std::make_shared<StagePart>(type, x, y, z, xz);
             stageParts.push_back(stagePart);
             if (string.rfind("chk(", 0) == 0)
                 checkPoints.push_back(stagePart);
@@ -58,8 +58,8 @@ Stage::Stage(std::string path) {
             float x = getfloat(string, 1);
             float sz = getfloat(string, 2);
             for (int i = 0; i < n; i++) {
-                std::shared_ptr<StagePart> stagePart(
-                    new StagePart(THE_WALL, x, GROUND, sz + i * 4800, 0));
+                std::shared_ptr<StagePart> stagePart =
+                    std::make_shared<StagePart>(THE_WALL, x, GROUND, sz + i * 4800, 0);
                 stageParts.push_back(stagePart);
             }
         }
@@ -68,8 +68,8 @@ Stage::Stage(std::string path) {
             float x = getfloat(string, 1);
             float sz = getfloat(string, 2);
             for (int i = 0; i < n; i++) {
-                std::shared_ptr<StagePart> stagePart(
-                    new StagePart(THE_WALL, x, GROUND, sz + i * 4800, 180));
+                std::shared_ptr<StagePart> stagePart =
+                    std::make_shared<StagePart>(THE_WALL, x, GROUND, sz + i * 4800, 180);
                 stageParts.push_back(stagePart);
             }
         }
@@ -78,8 +78,8 @@ Stage::Stage(std::string path) {
             float z = getfloat(string, 1);
             float sx = getfloat(string, 2);
             for (int i = 0; i < n; i++) {
-                std::shared_ptr<StagePart> stagePart(
-                    new StagePart(THE_WALL, sx + i * 4800, GROUND, z, 90));
+                std::shared_ptr<StagePart> stagePart =
+                    std::make_shared<StagePart>(THE_WALL, sx + i * 4800, GROUND, z, 90);
                 stageParts.push_back(stagePart);
             }
         }
@@ -88,21 +88,21 @@ Stage::Stage(std::string path) {
             float z = getfloat(string, 1);
             float sx = getfloat(string, 2);
             for (int i = 0; i < n; i++) {
-                std::shared_ptr<StagePart> stagePart(
-                    new StagePart(THE_WALL, sx + i * 4800, GROUND, z, -90));
+                std::shared_ptr<StagePart> stagePart =
+                    std::make_shared<StagePart>(THE_WALL, sx + i * 4800, GROUND, z, -90);
                 stageParts.push_back(stagePart);
             }
         }
     }
-    groundModel = std::shared_ptr<Model>(new Model(path + "/ground"));
-    Loader::loadModel(groundModel);
-    polys1Model = std::shared_ptr<Model>(new Model(path + "/polys1"));
-    Loader::loadModel(polys1Model);
-    polys2Model = std::shared_ptr<Model>(new Model(path + "/polys2"));
-    Loader::loadModel(polys2Model);
-    cloudsModel = std::shared_ptr<Model>(new Model(path + "/clouds"));
-    Loader::loadModel(cloudsModel);
-    mountainsModel = std::shared_ptr<Model>(new Model(path + "/mountains"));
-    Loader::loadModel(mountainsModel);
+    groundModel = std::make_shared<Model>(path + "/ground");
+    Loader::loadModel(groundModel.get());
+    polys1Model = std::make_shared<Model>(path + "/polys1");
+    Loader::loadModel(polys1Model.get());
+    polys2Model = std::make_shared<Model>(path + "/polys2");
+    Loader::loadModel(polys2Model.get());
+    cloudsModel = std::make_shared<Model>(path + "/clouds");
+    Loader::loadModel(cloudsModel.get());
+    mountainsModel = std::make_shared<Model>(path + "/mountains");
+    Loader::loadModel(mountainsModel.get());
     reader.close();
 }
