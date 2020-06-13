@@ -94,10 +94,10 @@ Stage::Stage(std::string path) {
             }
         }
     }
+    reader.close();
     groundModel = std::make_shared<Model>(path + "/ground");
     polys1Model = std::make_shared<Model>(path + "/polys1");
     polys2Model = std::make_shared<Model>(path + "/polys2");
     cloudsModel = std::make_shared<Model>(path + "/clouds");
     mountainsModel = std::make_shared<Model>(path + "/mountains");
-    reader.close();
 }
