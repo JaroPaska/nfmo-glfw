@@ -4,8 +4,11 @@ layout(location = 1) in vec3 in_polyNormal;
 layout(location = 2) in vec3 in_polyCentroid;
 layout(location = 3) in vec3 in_polyColor;
 
+out vec3 fs_modelPos;
+out vec3 fs_viewPos;
+out vec4 fs_lightSpacePos[4];
 out vec3 fs_polyColor;
-out vec4 fs_fragViewPos;
+out float fs_diff;
 
 uniform mat4 uni_model;
 uniform mat4 uni_invModel;
@@ -15,13 +18,17 @@ uniform mat4 uni_projection;
 uniform bool uni_doSnap;
 uniform vec3 uni_snap;
 uniform bool uni_light;
-uniform vec3 uni_lightDirection;
 uniform bool uni_useUniColor;
 uniform vec3 uni_polyColor;
 
+uniform vec3 uni_lightDirection;
+uniform mat4 lightViewProjection[4];
+
 void main() {
-    fs_fragViewPos = uni_view * uni_model * vec4(in_vertexPos, 1.0);
-    gl_Position = uni_projection * fs_fragViewPos;
+    vec4 modelPos = uni_model * vec4(in_vertexPos, 1.0);
+    vec4 viewPos = uni_view * modelPos;
+    gl_Position = uni_projection * viewPos;
+    fs_viewPos = viewPos.xyz;
 
     vec3 polyColor = in_polyColor;
     if (uni_useUniColor)
