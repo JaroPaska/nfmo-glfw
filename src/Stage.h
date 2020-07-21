@@ -1,7 +1,6 @@
 #ifndef STAGE_H
 #define STAGE_H
 #include "Model.h"
-#include "RawModel.h"
 #include "StagePart.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
