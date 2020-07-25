@@ -32,7 +32,7 @@ bool shadowed() {
     projCoords = projCoords * 0.5 + 0.5;
     if (projCoords.z < 0.0 || projCoords.z > 1.0)
         return false;
-    float closestDepth = texture(uni_depthMap[i], projCoords.xy).r;
+    float closestDepth = texture(uni_depthMap[0], projCoords.xy).r;
     float bias = max(0.002 * (1.0 - fs_diff), 0.001);
     return projCoords.z - bias > closestDepth ? true : false;
 }

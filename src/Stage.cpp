@@ -27,11 +27,11 @@ Stage::Stage(std::string path) {
         if (string.rfind("set(", 0) == 0 || string.rfind("chk(", 0) == 0 ||
             string.rfind("fix(", 0) == 0 && nfix > 0) {
             int type = getint(string, 0);
-            if (!scenery && StagePart::isScenery(type))
+            if (!scenery && StageObject::isScenery(type))
                 continue;
-            if (string.rfind("chk(", 0) == 0 && !StagePart::isCheckpoint(type))
+            if (string.rfind("chk(", 0) == 0 && !StageObject::isCheckpoint(type))
                 continue;
-            if (string.rfind("fix(", 0) == 0 && !StagePart::isFixpoint(type))
+            if (string.rfind("fix(", 0) == 0 && !StageObject::isFixpoint(type))
                 continue;
             float x, y, z, xz;
             x = getfloat(string, 1);
@@ -46,21 +46,23 @@ Stage::Stage(std::string path) {
                 xz = getfloat(string, 3);
                 y = GROUND;
             }
-            std::shared_ptr<StagePart> stagePart = std::make_shared<StagePart>(type, x, y, z, xz);
-            stageParts.push_back(stagePart);
+            std::shared_ptr<StageObject> stageObject =
+                std::make_shared<StageObject>(type, x, y, z, xz);
+            stageObjects[nextID] = stageObject;
             if (string.rfind("chk(", 0) == 0)
-                checkPoints.push_back(stagePart);
+                checkPoints.push_back(nextID);
             if (string.rfind("fix(", 0) == 0)
-                fixPoints.push_back(stagePart);
+                fixPoints.push_back(nextID);
+            nextID++;
         }
         if (string.rfind("maxr(", 0) == 0) {
             int n = getint(string, 0);
             float x = getfloat(string, 1);
             float sz = getfloat(string, 2);
             for (int i = 0; i < n; i++) {
-                std::shared_ptr<StagePart> stagePart =
-                    std::make_shared<StagePart>(THE_WALL, x, GROUND, sz + i * 4800, 0);
-                stageParts.push_back(stagePart);
+                std::shared_ptr<StageObject> stageObject =
+                    std::make_shared<StageObject>(THE_WALL, x, GROUND, sz + i * 4800, 0);
+                stageObjects[nextID++] = stageObject;
             }
         }
         if (string.rfind("maxl(", 0) == 0) {
@@ -68,9 +70,9 @@ Stage::Stage(std::string path) {
             float x = getfloat(string, 1);
             float sz = getfloat(string, 2);
             for (int i = 0; i < n; i++) {
-                std::shared_ptr<StagePart> stagePart =
-                    std::make_shared<StagePart>(THE_WALL, x, GROUND, sz + i * 4800, 180);
-                stageParts.push_back(stagePart);
+                std::shared_ptr<StageObject> stageObject =
+                    std::make_shared<StageObject>(THE_WALL, x, GROUND, sz + i * 4800, 180);
+                stageObjects[nextID++] = stageObject;
             }
         }
         if (string.rfind("maxt(", 0) == 0) {
@@ -78,9 +80,9 @@ Stage::Stage(std::string path) {
             float z = getfloat(string, 1);
             float sx = getfloat(string, 2);
             for (int i = 0; i < n; i++) {
-                std::shared_ptr<StagePart> stagePart =
-                    std::make_shared<StagePart>(THE_WALL, sx + i * 4800, GROUND, z, 90);
-                stageParts.push_back(stagePart);
+                std::shared_ptr<StageObject> stageObject =
+                    std::make_shared<StageObject>(THE_WALL, sx + i * 4800, GROUND, z, 90);
+                stageObjects[nextID++] = stageObject;
             }
         }
         if (string.rfind("maxb(", 0) == 0) {
@@ -88,9 +90,9 @@ Stage::Stage(std::string path) {
             float z = getfloat(string, 1);
             float sx = getfloat(string, 2);
             for (int i = 0; i < n; i++) {
-                std::shared_ptr<StagePart> stagePart =
-                    std::make_shared<StagePart>(THE_WALL, sx + i * 4800, GROUND, z, -90);
-                stageParts.push_back(stagePart);
+                std::shared_ptr<StageObject> stageObject =
+                    std::make_shared<StageObject>(THE_WALL, sx + i * 4800, GROUND, z, -90);
+                stageObjects[nextID++] = stageObject;
             }
         }
     }

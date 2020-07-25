@@ -1,20 +1,19 @@
 #ifndef STAGE_H
 #define STAGE_H
 #include "Model.h"
-#include "StagePart.h"
+#include "StageObject.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
 const float GROUND = 250;
 const float skyline = -300;
-const glm::vec3 X_AXIS = glm::vec3(1, 0, 0);
-const glm::vec3 Y_AXIS = glm::vec3(0, -1, 0);
-const glm::vec3 Z_AXIS = glm::vec3(0, 0, 1);
 
 struct Stage {
+    int nextID = 0;
     std::shared_ptr<Model> groundModel;
     std::shared_ptr<Model> polys1Model;
     std::shared_ptr<Model> polys2Model;
@@ -30,9 +29,9 @@ struct Stage {
     int nlaps = 0;
     int nfix = 1;
     bool scenery = true;
-    std::vector<std::shared_ptr<StagePart>> stageParts;
-    std::vector<std::shared_ptr<StagePart>> checkPoints;
-    std::vector<std::shared_ptr<StagePart>> fixPoints;
+    std::unordered_map<int, std::shared_ptr<StageObject>> stageObjects;
+    std::vector<int> checkPoints;
+    std::vector<int> fixPoints;
     Stage();
     Stage(std::string path);
 };

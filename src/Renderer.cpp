@@ -28,14 +28,14 @@ void Renderer::renderPolys(Model *model, StageObject *stageObject, int polyType)
     }
 }
 
-void Renderer::renderPolys(StagePart *stagePart, int polyType) {
-    renderPolys(models[stagePart->type].get(), stagePart, polyType);
+void Renderer::renderPolys(StageObject *stageObject, int polyType) {
+    renderPolys(models[stageObject->type].get(), stageObject, polyType);
 }
 
-void Renderer::renderPolys(const std::vector<std::shared_ptr<StagePart>> &stageParts,
-                           int polyType) {
-    for (int i = 0; i < stageParts.size(); i++)
-        renderPolys(stageParts[i].get(), polyType);
+void Renderer::renderPolys(
+    const std::unordered_map<int, std::shared_ptr<StageObject>> &stageObjects, int polyType) {
+    for (auto it = stageObjects.begin(); it != stageObjects.end(); ++it)
+        renderPolys(it->second.get(), polyType);
 }
 
 void Renderer::render(Stage *stage) {
@@ -80,14 +80,14 @@ void Renderer::render(Stage *stage) {
     renderPolys(stage->polys1Model.get(), POLYS_FLAT_COLOR);
     renderPolys(stage->polys2Model.get(), POLYS_FLAT_COLOR);
     glEnable(GL_DEPTH_TEST);
-    renderPolys(stage->stageParts, POLYS_FLAT_COLOR);
+    renderPolys(stage->stageObjects, POLYS_FLAT_COLOR);
     polyShader->setBool("uni_useUniColor", true);
     polyShader->setVec3("uni_polyColor", glass);
-    renderPolys(stage->stageParts, POLYS_GLASS);
+    renderPolys(stage->stageObjects, POLYS_GLASS);
     polyShader->setBool("uni_light", stage->lightson);
     polyShader->setBool("uni_doSnap", false);
     polyShader->setBool("uni_useUniColor", false);
-    renderPolys(stage->stageParts, POLYS_LIGHT);
+    renderPolys(stage->stageObjects, POLYS_LIGHT);
 
     /*projection = glm::perspective(glm::radians(60.f), (float)Window::width /
     (float)Window::height, 750.f / f, 750000.f / f);

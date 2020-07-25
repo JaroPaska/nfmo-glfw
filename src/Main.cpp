@@ -1,6 +1,7 @@
 #include "Loader.h"
 #include "Renderer.h"
 #include "Stage.h"
+#include "StageObject.h"
 #include "Window.h"
 
 int main() {
@@ -35,5 +36,4 @@ int main() {
         //
         Window::swapBuffers();
     }
-    Window::terminate();
 }
