@@ -1,7 +1,7 @@
 #include "StageObject.h"
 
 StageObject::StageObject() {
-    this->type = -1;
+    this->type = PLACEHOLDER;
     this->pos = glm::vec3(0);
     this->rot = glm::quat();
     this->scale = glm::vec3(1);

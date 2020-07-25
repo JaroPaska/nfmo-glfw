@@ -46,9 +46,9 @@ Stage::Stage(std::string path) {
                 xz = getfloat(string, 3);
                 y = GROUND;
             }
-            std::shared_ptr<StageObject> stageObject =
-                std::make_shared<StageObject>(type, x, y, z, xz);
-            stageObjects[nextID] = stageObject;
+            std::unique_ptr<StageObject> stageObject =
+                std::make_unique<StageObject>(type, x, y, z, xz);
+            stageObjects[nextID] = std::move(stageObject);
             if (string.rfind("chk(", 0) == 0)
                 checkPoints.push_back(nextID);
             if (string.rfind("fix(", 0) == 0)
@@ -60,9 +60,9 @@ Stage::Stage(std::string path) {
             float x = getfloat(string, 1);
             float sz = getfloat(string, 2);
             for (int i = 0; i < n; i++) {
-                std::shared_ptr<StageObject> stageObject =
-                    std::make_shared<StageObject>(THE_WALL, x, GROUND, sz + i * 4800, 0);
-                stageObjects[nextID++] = stageObject;
+                std::unique_ptr<StageObject> stageObject =
+                    std::make_unique<StageObject>(THE_WALL, x, GROUND, sz + i * 4800, 0);
+                stageObjects[nextID++] = std::move(stageObject);
             }
         }
         if (string.rfind("maxl(", 0) == 0) {
@@ -70,9 +70,9 @@ Stage::Stage(std::string path) {
             float x = getfloat(string, 1);
             float sz = getfloat(string, 2);
             for (int i = 0; i < n; i++) {
-                std::shared_ptr<StageObject> stageObject =
-                    std::make_shared<StageObject>(THE_WALL, x, GROUND, sz + i * 4800, 180);
-                stageObjects[nextID++] = stageObject;
+                std::unique_ptr<StageObject> stageObject =
+                    std::make_unique<StageObject>(THE_WALL, x, GROUND, sz + i * 4800, 180);
+                stageObjects[nextID++] = std::move(stageObject);
             }
         }
         if (string.rfind("maxt(", 0) == 0) {
@@ -80,9 +80,9 @@ Stage::Stage(std::string path) {
             float z = getfloat(string, 1);
             float sx = getfloat(string, 2);
             for (int i = 0; i < n; i++) {
-                std::shared_ptr<StageObject> stageObject =
-                    std::make_shared<StageObject>(THE_WALL, sx + i * 4800, GROUND, z, 90);
-                stageObjects[nextID++] = stageObject;
+                std::unique_ptr<StageObject> stageObject =
+                    std::make_unique<StageObject>(THE_WALL, sx + i * 4800, GROUND, z, 90);
+                stageObjects[nextID++] = std::move(stageObject);
             }
         }
         if (string.rfind("maxb(", 0) == 0) {
@@ -90,16 +90,16 @@ Stage::Stage(std::string path) {
             float z = getfloat(string, 1);
             float sx = getfloat(string, 2);
             for (int i = 0; i < n; i++) {
-                std::shared_ptr<StageObject> stageObject =
-                    std::make_shared<StageObject>(THE_WALL, sx + i * 4800, GROUND, z, -90);
-                stageObjects[nextID++] = stageObject;
+                std::unique_ptr<StageObject> stageObject =
+                    std::make_unique<StageObject>(THE_WALL, sx + i * 4800, GROUND, z, -90);
+                stageObjects[nextID++] = std::move(stageObject);
             }
         }
     }
     reader.close();
-    groundModel = std::make_shared<Model>(path + "/ground");
-    polys1Model = std::make_shared<Model>(path + "/polys1");
-    polys2Model = std::make_shared<Model>(path + "/polys2");
-    cloudsModel = std::make_shared<Model>(path + "/clouds");
-    mountainsModel = std::make_shared<Model>(path + "/mountains");
+    groundModel = std::make_unique<Model>(path + "/ground");
+    polys1Model = std::make_unique<Model>(path + "/polys1");
+    polys2Model = std::make_unique<Model>(path + "/polys2");
+    cloudsModel = std::make_unique<Model>(path + "/clouds");
+    mountainsModel = std::make_unique<Model>(path + "/mountains");
 }

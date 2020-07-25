@@ -4,9 +4,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-std::shared_ptr<Shader> Renderer::polyShader;
-std::unordered_map<int, std::shared_ptr<Model>> Renderer::models;
-std::shared_ptr<StageObject> Renderer::camera;
+std::unique_ptr<Shader> Renderer::polyShader;
+std::unordered_map<int, std::unique_ptr<Model>> Renderer::models;
+std::unique_ptr<StageObject> Renderer::camera;
 glm::mat4 Renderer::view;
 glm::mat4 Renderer::projection;
 
@@ -33,7 +33,7 @@ void Renderer::renderPolys(StageObject *stageObject, int polyType) {
 }
 
 void Renderer::renderPolys(
-    const std::unordered_map<int, std::shared_ptr<StageObject>> &stageObjects, int polyType) {
+    const std::unordered_map<int, std::unique_ptr<StageObject>> &stageObjects, int polyType) {
     for (auto it = stageObjects.begin(); it != stageObjects.end(); ++it)
         renderPolys(it->second.get(), polyType);
 }

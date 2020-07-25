@@ -14,11 +14,11 @@ const float skyline = -300;
 
 struct Stage {
     int nextID = 0;
-    std::shared_ptr<Model> groundModel;
-    std::shared_ptr<Model> polys1Model;
-    std::shared_ptr<Model> polys2Model;
-    std::shared_ptr<Model> cloudsModel;
-    std::shared_ptr<Model> mountainsModel;
+    std::unique_ptr<Model> groundModel;
+    std::unique_ptr<Model> polys1Model;
+    std::unique_ptr<Model> polys2Model;
+    std::unique_ptr<Model> cloudsModel;
+    std::unique_ptr<Model> mountainsModel;
     glm::vec3 snap = glm::vec3();
     glm::vec3 sky = glm::vec3(170, 220, 255);
     glm::vec3 grnd = glm::vec3(205, 200, 200);
@@ -29,7 +29,7 @@ struct Stage {
     int nlaps = 0;
     int nfix = 1;
     bool scenery = true;
-    std::unordered_map<int, std::shared_ptr<StageObject>> stageObjects;
+    std::unordered_map<int, std::unique_ptr<StageObject>> stageObjects;
     std::vector<int> checkPoints;
     std::vector<int> fixPoints;
     Stage();

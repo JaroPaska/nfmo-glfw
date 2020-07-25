@@ -8,9 +8,9 @@ int main() {
     Window::createWindow(1600, 900, "NFM Origins");
     Loader::loadShaders();
     Loader::loadModels();
-    Renderer::camera = std::make_shared<StageObject>();
+    Renderer::camera = std::make_unique<StageObject>();
 
-    std::shared_ptr<Stage> stage = std::make_shared<Stage>("stages/26");
+    std::unique_ptr<Stage> stage = std::make_unique<Stage>("stages/26");
     while (!Window::shouldClose()) {
         Window::pollEvents();
         // do stuff

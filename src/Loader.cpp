@@ -20,9 +20,9 @@ void Loader::loadModels() {
         "tree6",         "tree7",    "tree8",         "cac1",     "cac2",      "cac3",
         "8sroad",        "8soffroad"};
     for (int i = 0; i < modelDirs.size(); i++)
-        Renderer::models[i + 10] = std::make_shared<Model>("models/" + modelDirs[i]);
+        Renderer::models[i + 10] = std::make_unique<Model>("models/" + modelDirs[i]);
 }
 
 void Loader::loadShaders() {
-    Renderer::polyShader = std::make_shared<Shader>("shaders/poly.vs", "shaders/poly.fs");
+    Renderer::polyShader = std::make_unique<Shader>("shaders/poly.vs", "shaders/poly.fs");
 }

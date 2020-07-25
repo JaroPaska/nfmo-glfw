@@ -8,6 +8,8 @@ const glm::vec3 X_AXIS = glm::vec3(1, 0, 0);
 const glm::vec3 Y_AXIS = glm::vec3(0, -1, 0);
 const glm::vec3 Z_AXIS = glm::vec3(0, 0, 1);
 
+const int PLACEHOLDER = INT_MIN;
+
 const int NORMAL_ROAD = 10;
 const int NORMAL_ROAD_EDGED = 11;
 const int NORMAL_ROAD_TWISTED_LEFT = 12;
@@ -56,6 +58,23 @@ const int BUMP_SLIDE = 54;
 const int OFFROAD_BIG_HILL_RAMP = 55;
 const int ROLLERCOASTER_START_END = 56;
 const int ROLLERCOASTER_CHECKPOINT = 64;
+
+const int TORNADO_SHARK = 0;
+const int FORMULA_7 = -1;
+const int WOW_CANINARO = -2;
+const int LA_VITA_CRAB = -3;
+const int NIMI = -4;
+const int MAX_REVENGE = -5;
+const int LEAD_OXIDE = -6;
+const int KOOL_KAT = -7;
+const int DRIFTER_X = -8;
+const int SWORD_OF_JUSTICE = -9;
+const int HIGH_RIDER = -10;
+const int EL_KING = -11;
+const int MIGHTY_EIGHT = -12;
+const int M_A_S_H_E_E_N = -13;
+const int RADICAL_ONE = -14;
+const int DR_MONSTAA = -15;
 
 struct StageObject {
     int type;
