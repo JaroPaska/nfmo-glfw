@@ -5,7 +5,7 @@
 #include "Window.h"
 
 int main() {
-    Window::createWindow(1600, 900, "NFM Origins");
+    Window::createWindow(1600, 900, "nfmo");
     Loader::loadShaders();
     Loader::loadModels();
     Renderer::camera = std::make_unique<StageObject>();
