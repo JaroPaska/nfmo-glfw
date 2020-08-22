@@ -44,5 +44,5 @@ void main() {
     } else
         fs_polyColor = polyColor;
     if (uni_doSnap)
-        fs_polyColor = fs_polyColor * (vec3(1) + uni_snap);
+        fs_polyColor *= (vec3(1) + uni_snap);
 }
