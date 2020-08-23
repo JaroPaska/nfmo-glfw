@@ -20,7 +20,7 @@ void Loader::loadModels() {
         "tree6",         "tree7",    "tree8",         "cac1",     "cac2",      "cac3",
         "8sroad",        "8soffroad"};
     for (int i = 0; i < modelDirs.size(); i++)
-        Renderer::models[i + 10] = std::make_unique<Model>("models/" + modelDirs[i]);
+        Renderer::models[i + 10] = std::make_unique<Model>("models/" + modelDirs[i], ((i == 6 || i == 33 || i == 34) ? true : false));
 }
 
 void Loader::loadShaders() {

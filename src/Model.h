@@ -11,6 +11,7 @@ struct Model {
     std::vector<std::shared_ptr<Polygon>> polygons;
     Model();
     Model(std::string path);
+    Model(std::string path, bool trueNormals);
     Model(std::string path, glm::vec3 firstColor, glm::vec3 secondColor);
     ~Model();
 };

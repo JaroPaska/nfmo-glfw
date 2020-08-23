@@ -10,7 +10,9 @@
 
 Model::Model() {}
 
-Model::Model(std::string path) {
+Model::Model(std::string path) : Model(path, false) {}
+
+Model::Model(std::string path, bool trueNormals) {
     std::string string;
     std::ifstream reader(path + "/modelInfo");
     while (getline(reader, string)) {
@@ -69,8 +71,15 @@ Model::Model(std::string path) {
                 for (int l = 0; l < 3; l++) {
                     for (int m = 0; m < 3; m++)
                         buffer.push_back(points[byPolyType[i][j]->triangles[k][l]][m]);
-                    for (int m = 0; m < 3; m++)
-                        buffer.push_back(byPolyType[i][j]->normal[m]);
+                    if (!trueNormals) {
+                        for (int m = 0; m < 3; m++)
+                            buffer.push_back(byPolyType[i][j]->normal[m]);
+                    } else {
+                        glm::vec3 normal = glm::normalize(glm::cross(points[byPolyType[i][j]->triangles[k][0]] - points[byPolyType[i][j]->triangles[k][1]],
+                        points[byPolyType[i][j]->triangles[k][0]] - points[byPolyType[i][j]->triangles[k][2]]));
+                        for (int m = 0; m < 3; m++)
+                            buffer.push_back(normal[m]);
+                    }
                     for (int m = 0; m < 3; m++)
                         buffer.push_back(byPolyType[i][j]->centroid[m]);
                     for (int m = 0; m < 3; m++)
