@@ -6,17 +6,18 @@
 #include <GLFW/glfw3.h>
 #include <vector>
 
-struct Model {
+struct StaticModel {
     std::vector<unsigned int> VAOs;
     std::vector<unsigned int> VBOs;
     std::vector<int> verts;
 
-    Model() {}
+    StaticModel() {}
 
-    Model(std::vector<unsigned int> VAOs, std::vector<unsigned int> VBOs, std::vector<int> verts)
+    StaticModel(std::vector<unsigned int> VAOs, std::vector<unsigned int> VBOs,
+                std::vector<int> verts)
         : VAOs(VAOs), VBOs(VBOs), verts(verts) {}
 
-    Model(std::vector<glm::vec3> pts, std::vector<Polygon> polys) {
+    StaticModel(std::vector<glm::vec3> pts, std::vector<Polygon> polys) {
         std::vector<std::vector<Polygon>> polyGroup(POLY_TYPES);
         std::vector<std::vector<Polygon>> linesGroup(LINES_TYPES);
         for (int i = 0; i < polys.size(); i++) {
@@ -88,6 +89,8 @@ struct Model {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
+
+    virtual ~StaticModel() {}
 };
 
 #endif

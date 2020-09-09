@@ -45,8 +45,9 @@ std::string getstring(std::string string, int index) {
     return t;
 }
 
-glm::vec3 getvec3(std::string string) {
-    return glm::vec3(getfloat(string, 0), getfloat(string, 1), getfloat(string, 2));
+glm::vec3 getvec3(std::string string, int index) {
+    return glm::vec3(getfloat(string, index), getfloat(string, index + 1),
+                     getfloat(string, index + 2));
 }
 
 #endif

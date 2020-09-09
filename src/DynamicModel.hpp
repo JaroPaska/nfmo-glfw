@@ -2,7 +2,7 @@
 #define DYNAMICMODEL_HPP
 
 #include "Getters.hpp"
-#include "Model.hpp"
+#include "StaticModel.hpp"
 #include "Polygon.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -12,25 +12,23 @@
 #include <string>
 #include <vector>
 
-struct DynamicModel {
-    Model model;
+struct DynamicModel : StaticModel {
     std::vector<glm::vec3> pts;
     std::vector<Polygon> polys;
 
     DynamicModel() {}
 
-    DynamicModel(std::vector<glm::vec3> pts, std::vector<Polygon> polys) : pts(pts), polys(polys) {
-        model = Model(pts, polys);
-    }
+    DynamicModel(std::vector<glm::vec3> pts, std::vector<Polygon> polys)
+        : StaticModel(pts, polys), pts(pts), polys(polys) {}
 
     ~DynamicModel() {
         for (int i = 0; i < POLY_TYPES + LINES_TYPES; i++) {
-            glDeleteVertexArrays(1, &model.VAOs[i]);
-            glDeleteBuffers(1, &model.VBOs[i]);
+            glDeleteVertexArrays(1, &VAOs[i]);
+            glDeleteBuffers(1, &VBOs[i]);
         }
     }
 
-    static DynamicModel fromFile(std::string folder) {
+    static DynamicModel *FromFile(std::string folder) {
         std::string path = folder + "/model";
         std::ifstream reader(path);
         if (reader) {
@@ -39,16 +37,16 @@ struct DynamicModel {
             std::vector<Polygon> polys;
             while (getline(reader, string)) {
                 if (string.rfind("v(", 0) == 0)
-                    pts.push_back(getvec3(string));
+                    pts.push_back(getvec3(string, 0));
                 if (string.rfind("<p>", 0) == 0)
                     polys.push_back(Polygon());
                 if (!polys.empty()) {
                     if (string.rfind("n(", 0) == 0)
-                        polys.back().normal = getvec3(string);
+                        polys.back().normal = getvec3(string, 0);
                     if (string.rfind("C(", 0) == 0)
-                        polys.back().centroid = getvec3(string);
+                        polys.back().centroid = getvec3(string, 0);
                     if (string.rfind("c(", 0) == 0)
-                        polys.back().color = getvec3(string);
+                        polys.back().color = getvec3(string, 0);
                     if (string.rfind("colnum(", 0) == 0)
                         polys.back().colnum = getint(string, 0);
                     if (string.rfind("glass(", 0) == 0)
@@ -74,11 +72,11 @@ struct DynamicModel {
                 }
             }
             reader.close();
-            return DynamicModel(pts, polys);
+            return new DynamicModel(pts, polys);
         }
         std::cerr << "Can't open " << path << " (at " << __FILE__ << ":" << __LINE__ << ":"
                   << __func__ << ")" << std::endl;
-        return DynamicModel();
+        return nullptr;
     }
 };
 

@@ -15,7 +15,7 @@ struct Transform {
     Transform(float x, float y, float z) : pos(glm::vec3(x, y, z)) {}
 
     Transform(float x, float y, float z, float xz) : Transform(x, y, z) {
-        rot = glm::rotate(glm::quat(), glm::radians(xz), Y_AXIS);
+        this->rot = glm::rotate(glm::quat(), glm::radians(xz), Y_AXIS);
     }
 };
 
